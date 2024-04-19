@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,10 +11,15 @@
     <title>CMS</title>
   </head>
   <body>
-    <h1>PÁGINA INICIAL</h1>
-    <h2>POSTAGENS MAIS RECENTES</h2>
-    <a href="/login">Entrar</a>
-    <a href="/arquivos">Arquivos Disponíveis</a>
-    
+
+    {{#error}}
+      <h3>{{.}}<h3>
+    {{/error}}
+
+    {{#data}}
+        <h1>Conteúdo do arquivo: </h1>
+        <p>{{.}}</p>
+    {{/data}}
+
   </body>
 </html>
