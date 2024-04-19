@@ -12,12 +12,15 @@
   </head>
   <body>
     <h1>Login</h1>
-    <form>
-        <label>Usuario</label>
-        <input type="text" id="usuario" label="usuario"/>
-        <label>Senha</label>
-        <input type="password" id="senha" label="senha"/>
-        <input type="submit">
+    <form action="/login" method="post">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" name="usuario"/>
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha"/>
+        <input type="submit" value="Login">
     </form>
+    {{#error}}
+      <h3>{{.}}<h3>
+    {{/error}}
   </body>
 </html>

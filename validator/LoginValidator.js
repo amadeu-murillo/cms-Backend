@@ -1,12 +1,12 @@
 const Joi = require('joi');
 
-const UserSchema = Joi.object({
+const LoginSchema = Joi.object({
     usuario: Joi.string()
         .min(3)
         .max(30),
     senha: Joi.string()
-        .min(8)
+        .min(3)
         .max(30)
-}).with('usuario', 'email');
+}).with('usuario', 'senha');
 
-module.exports = UserSchema;
+module.exports = LoginSchema;
