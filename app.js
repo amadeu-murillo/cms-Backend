@@ -4,12 +4,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
 const session = require("express-session");
+const acesso = require('./helpers/acesso');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-app.use(express.static(path.join(__dirname, 'public')));
 
 // view engine setup
 var mustacheExpress = require("mustache-express");
@@ -23,14 +23,16 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
-}));   
-
+}));
+app.use(acesso.estaLogado);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 
 module.exports = app;
