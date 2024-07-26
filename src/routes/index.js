@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const Usuario = require('../model/Usuario');
-const LoginValidator = require('../validator/LoginValidator');
 const path = require('path');
 const fs = require('fs');
 const acesso = require('../middlewares/middlewares');
+const loginController = require('../controllers/loginController')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -16,35 +15,11 @@ router.get('/', function(req, res, next) {
   }
 });
 
-router.get('/login', function(req, res, next) {
-  const {error, value} = {};
-  res.render('login', {error, value});
-});
+router.get('/login', loginController.index);
 
-router.get('/logout', function(req, res, next) {
-  // atribui um valor indefinido para o usuário na sessão
-  req.session.logado = false;
-  req.session.user = undefined;
-  res.redirect('/');
-})
+router.get('/logout',loginController.logout)
 
-router.post('/login', function(req, res, next) {
-  const {error, value} = LoginValidator.validate(req.body);
-  console.log('usuario: ' + value.usuario + ' senha: ' + value.senha);
-  if (error) {
-    res.render('login', {error: error.details[0].message, value: req.body});
-  }
-  else {
-    // Checando dados do usuário
-    if (Usuario.isUser(value)) {
-      req.session.user = value;
-      res.redirect('/');
-    } 
-    else {
-        res.render('login', {error: 'Invalid username or password', value: req.body});
-    }
-  }
-});
+router.post('/login', loginController.login);
 
 //Renderiza a página com os arquivos já criados disponíveis
 router.get('/arquivos', (req, res) => {

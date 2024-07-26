@@ -2,22 +2,7 @@ var express = require('express');
 var router = express.Router();
 const fs = require('fs');
 const path = require('path');
-const Usuario = require('../model/Usuario');
-const acesso = require('../middlewares/middlewares');
-
-
-// Verifica se o usuário está logado
-aut = function (req, res, next) {
-  if (!req.session.user || !Usuario.isUser(req.session.user)) {
-    console.log('error');
-    res.redirect('../login');
-  }
-  else {
-    next();
-  }
-}
-
-router.use(acesso.autentica);
+const {autentica} = require('../middlewares/middlewares');
 
 // Página inicial do usuário ainda não implementada
 router.get('/', function(req, res) {
@@ -33,9 +18,10 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/novo', function(req, res, next) {
+router.get('/novo',autentica, function(req, res, next) {
   res.render('editor');
 });
+
 router.post('/salvarPostagem', (req, res) => {
     const { titulo, postagem } = req.body;
     console.log(req.body.editor);
