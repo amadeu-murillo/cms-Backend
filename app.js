@@ -7,6 +7,7 @@ const acesso = require('./src/middlewares/middlewares');
 
 const indexRouter = require('./src/routes/index');
 const usersRouter = require('./src/routes/users');
+const loginRoutes = require('./src/routes/login');
 
 require('dotenv').config();
 
@@ -35,6 +36,7 @@ app.use(session({
 app.use(acesso.estaLogado);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/', loginRoutes);
 
 
 module.exports = app;

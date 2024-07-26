@@ -3,7 +3,6 @@ var router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const acesso = require('../middlewares/middlewares');
-const loginController = require('../controllers/loginController')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -15,11 +14,7 @@ router.get('/', function(req, res, next) {
   }
 });
 
-router.get('/login', loginController.index);
 
-router.get('/logout',loginController.logout)
-
-router.post('/login', loginController.login);
 
 //Renderiza a página com os arquivos já criados disponíveis
 router.get('/arquivos', (req, res) => {
