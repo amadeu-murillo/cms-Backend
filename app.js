@@ -1,22 +1,22 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 require('dotenv').config();
 const session = require("express-session");
-const acesso = require('./helpers/acesso');
+const acesso = require('./src/helpers/acesso');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./src/routes/index');
+const usersRouter = require('./src/routes/users');
 
-var app = express();
+const app = express();
 
 // view engine setup
-var mustacheExpress = require("mustache-express");
-var engine = mustacheExpress();
+const mustacheExpress = require("mustache-express");
+const engine = mustacheExpress();
 app.engine("mustache", engine);
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/src/views'));
 app.set('view engine', 'mustache');
 
 app.use(logger('dev'));
