@@ -4,8 +4,7 @@ const Usuario = require('../model/Usuario');
 const LoginValidator = require('../validator/LoginValidator');
 const path = require('path');
 const fs = require('fs');
-const acesso = require('../helpers/acesso');
-const { start } = require('repl');
+const acesso = require('../middlewares/middlewares');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

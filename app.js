@@ -2,12 +2,13 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-require('dotenv').config();
 const session = require("express-session");
-const acesso = require('./src/helpers/acesso');
+const acesso = require('./src/middlewares/middlewares');
 
 const indexRouter = require('./src/routes/index');
 const usersRouter = require('./src/routes/users');
+
+require('dotenv').config();
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.set('views', path.join(__dirname, '/src/views'));
 app.set('view engine', 'mustache');
 
 app.use(logger('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

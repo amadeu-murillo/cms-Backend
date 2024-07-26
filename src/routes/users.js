@@ -3,7 +3,8 @@ var router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const Usuario = require('../model/Usuario');
-const acesso = require('../helpers/acesso');
+const acesso = require('../middlewares/middlewares');
+
 
 // Verifica se o usuário está logado
 aut = function (req, res, next) {
@@ -19,7 +20,7 @@ aut = function (req, res, next) {
 router.use(acesso.autentica);
 
 // Página inicial do usuário ainda não implementada
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   const diretorioArquivos = path.resolve(__dirname, "..", "Arquivos");
 
   fs.readdir(diretorioArquivos, (erro, files) => {
