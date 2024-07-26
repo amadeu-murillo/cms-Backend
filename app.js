@@ -5,8 +5,7 @@ const logger = require('morgan');
 const session = require("express-session");
 const acesso = require('./src/middlewares/middlewares');
 
-const indexRouter = require('./src/routes/index');
-const usersRouter = require('./src/routes/users');
+const arquivosRouter = require('./src/routes/arquivos');
 const loginRoutes = require('./src/routes/login');
 
 require('dotenv').config();
@@ -34,8 +33,7 @@ app.use(session({
     saveUninitialized: false
 }));
 app.use(acesso.estaLogado);
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/arquivos', arquivosRouter);
 app.use('/', loginRoutes);
 
 

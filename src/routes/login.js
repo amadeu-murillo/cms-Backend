@@ -3,6 +3,8 @@ var router = express.Router();
 
 const loginController = require('../controllers/loginController')
 
+router.get('/', loginController.homePage);
+
 router.get('/login', loginController.index);
 
 router.get('/logout',loginController.logout)

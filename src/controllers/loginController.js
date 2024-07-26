@@ -1,6 +1,15 @@
 const LoginValidator = require('../validator/LoginValidator');
 const Usuario = require('../model/Usuario');
 
+exports.homePage = (req, res) => {
+  if (req.session.logado) {
+    res.render('index', { usuario: req.session.user });
+  }
+  else {
+    res.render('index');
+  }
+}
+
 exports.index = (req, res) => {
   const {error, value} = {};
   res.render('login', {error, value});

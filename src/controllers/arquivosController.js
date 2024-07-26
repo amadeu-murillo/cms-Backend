@@ -1,24 +1,8 @@
-var express = require('express');
-var router = express.Router();
 const path = require('path');
 const fs = require('fs');
-const acesso = require('../middlewares/middlewares');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  if (req.session.logado) {
-    res.render('index', { usuario: req.session.user });
-  }
-  else {
-    res.render('index');
-  }
-});
-
-
-
-//Renderiza a página com os arquivos já criados disponíveis
-router.get('/arquivos', (req, res) => {
-
+// Mostra todos arquivos
+exports.index = (req, res) => {
   const diretorioArquivos = path.resolve(__dirname, "..", "Arquivos");
 
   fs.readdir(diretorioArquivos, (erro, files) => {
@@ -29,33 +13,10 @@ router.get('/arquivos', (req, res) => {
     console.log(files);
     res.render("paginas", {files: files});
   });
-});
+}
 
-//Renderiza conteudo de arquivos
-router.get("/arquivos/:file", acesso.autentica, (req, res) => {
-  const { file } = req.params;
-  console.log(file);
-  const dirPath = path.resolve(__dirname, "..", "Arquivos");
-  const filePath = path.join(dirPath, file);
-
-  if(!fs.existsSync(filePath)){
-    res.render("conteudo", {error: "Erro ao encontrar arquivo: arquivo não existe."});
-    return;
-  };
-
-  //Renderiza o conteúdo do arquivo na página de edição
-    fs.readFile(filePath, 'utf-8', (erro, data) => {
-      if (erro) {
-        console.error('Erro ao ler o arquivo:', erro);
-        res.status(500).send('Erro interno do servidor');
-        return;
-      }
-      return res.render("editor", {titulo: file.replace(".html", ""), conteudo: data});
-    });
-  }
-);
-
-router.get("/conteudo/:file", (req, res) => {
+// Mostra um arquivo pedido
+exports.getFile = (req, res) => {
   const { file } = req.params;
   console.log(file);
   const dirPath = path.resolve(__dirname, "..", "Arquivos");
@@ -75,6 +36,65 @@ router.get("/conteudo/:file", (req, res) => {
       }
       return res.render("conteudo", {titulo: file.replace(".html", ""), conteudo: data});
     });
-  }
-);
-module.exports = router;
+}
+
+// Página de criação de arquivo
+exports.createPage = (req, res) => {
+  res.render('editor');
+}
+
+// Carrega página de edição
+exports.editPage = (req, res) => {
+  const { file } = req.params;
+  console.log(file);
+  const dirPath = path.resolve(__dirname, "..", "Arquivos");
+  const filePath = path.join(dirPath, file);
+
+  if(!fs.existsSync(filePath)){
+    res.render("conteudo", {error: "Erro ao encontrar arquivo: arquivo não existe."});
+    return;
+  };
+
+  //Renderiza o conteúdo do arquivo na página de edição
+    fs.readFile(filePath, 'utf-8', (erro, data) => {
+      if (erro) {
+        console.error('Erro ao ler o arquivo:', erro);
+        res.status(500).send('Erro interno do servidor');
+        return;
+      }
+      return res.render("editor", {titulo: file.replace(".html", ""), conteudo: data});
+    });
+}
+
+// Criar postagem
+exports.createFile = (req, res) => {
+  const { titulo, postagem } = req.body;
+    console.log(req.body.editor);
+    // Create o nome e o caminho do arquivo
+    const filePath = path.join(__dirname, '..', 'Arquivos', `${titulo}.html`);
+
+    // Escrevendo o arquivo
+    fs.writeFile(filePath, postagem, err => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to save post' });
+        } else {
+            console.log(`Post "${titulo}" saved successfully`);
+            res.redirect('/');
+        }
+    });
+};
+
+// Excluir postagem
+exports.delete = (req, res) => {
+  const titulo = req.query.titulo;
+
+  console.log(titulo);
+  const filePath = path.join(__dirname, '..', 'Arquivos', `${titulo}.html`);
+  //Deleta a postagem
+  fs.unlink(filePath, function (err) {
+    if (err) 
+      throw err;
+  });
+  res.redirect('/');
+}
