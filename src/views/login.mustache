@@ -17,10 +17,13 @@
         <input type="text" id="usuario" name="usuario"/>
         <label for="senha">Senha</label>
         <input type="password" id="senha" name="senha"/>
-        <input type="submit" value="Login">
+        {{#error}}
+          <h3 class="error">{{.}}<h3>
+        {{/error}}
+        <input class="options" type="submit" value="Login">
     </form>
-    {{#error}}
-      <h3>{{.}}<h3>
-    {{/error}}
+    
+
+
   </body>
 </html>

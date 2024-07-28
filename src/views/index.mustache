@@ -13,9 +13,21 @@
   <body>
     <h1>PÁGINA INICIAL</h1>
     <h2>POSTAGENS MAIS RECENTES</h2>
-    <a href="/login">Entrar</a>
-    <a href="/arquivos/novo">Criar Postagem</a>
-    <a href="/arquivos">Postagens Disponíveis</a>
+
+    {{#success}}
+      <p class="success">Login realizado com sucesso!</p>
+    {{/success}}
+
+    {{#login}}
+      <a class="options" href="/logout">Sair</a>
+    {{/login}}
+
+    {{^login}}
+      <a class="options" href="/login">Entrar</a>
+    {{/login}}
+
+    <a class="options" href="/arquivos/novo">Criar Postagem</a>
+    <a class="options" href="/arquivos">Postagens Disponíveis</a>
     
   </body>
 </html>

@@ -3,10 +3,10 @@ const Usuario = require('../model/Usuario');
 
 exports.homePage = (req, res) => {
   if (req.session.logado) {
-    res.render('index', { usuario: req.session.user });
+    res.render('index', { login: true });
   }
   else {
-    res.render('index');
+    res.render('index', {login: false});
   }
 }
 
@@ -25,7 +25,7 @@ exports.login = (req, res) => {
     // Checando dados do usuário
     if (Usuario.isUser(value)) {
       req.session.user = value;
-      res.redirect('/');
+      res.render('index', {login: true, success: true});
     } 
     else {
         res.render('login', {error: 'Invalid username or password', value: req.body});
