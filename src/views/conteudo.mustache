@@ -18,14 +18,16 @@
 
     {{#titulo}}
       <h1>Titulo da página: {{titulo}}</h1>
-    {{/titulo}}
-
     {{#conteudo}}
-      <h1>Conteúdo da página:</h1>
+      <h1>Conteúdo:</h1>
       <div class="conteudo">
         {{{conteudo}}}
       </div>
     {{/conteudo}}
+      <a class="options" href="/arquivos/editar/{{titulo}}.html">Editar</a>
+    {{/titulo}}
 
+
+    <a class="options" href="/arquivos">Voltar</a>
   </body>
 </html>
