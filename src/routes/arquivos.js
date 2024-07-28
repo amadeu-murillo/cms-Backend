@@ -19,6 +19,6 @@ router.get("/:file", arquivosController.getFile);
 router.post('/create', arquivosController.createFile);
 
 // Deleta arquivos
-router.get('/excluir', arquivosController.delete);
+router.get('/excluir/:titulo', arquivosController.delete);
 
 module.exports = router;

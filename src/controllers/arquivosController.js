@@ -87,14 +87,21 @@ exports.createFile = (req, res) => {
 
 // Excluir postagem
 exports.delete = (req, res) => {
-  const titulo = req.query.titulo;
-
-  console.log(titulo);
+  const titulo = req.params.titulo;
   const filePath = path.join(__dirname, '..', 'Arquivos', `${titulo}.html`);
-  //Deleta a postagem
-  fs.unlink(filePath, function (err) {
-    if (err) 
-      throw err;
-  });
-  res.redirect('/');
+  // Verifica se a postagem existe
+  if (fs.existsSync(filePath)) {
+    // Deleta o arquivo
+    fs.unlink(filePath, function (err) {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Erro ao excluir arquivo');
+        return;
+      }
+      console.log(`Post "${titulo}" excluído com sucesso`);
+      res.redirect('/arquivos/');
+    });
+  } else {
+    res.render("conteudo", {error: "Erro ao encontrar arquivo: arquivo não existe."});
+  }
 }
