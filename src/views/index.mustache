@@ -29,7 +29,13 @@
     <a class="options" href="/arquivos">Postagens Disponíveis</a>
     
     <h2>POSTAGENS MAIS RECENTES</h2>
-    
+    {{#previews}}
+      <li class="preview">
+        <h2>{{titulo}}</h2>
+        <a href="/arquivos/{{filename}}">Ver completa</a>
+        <p>{{{preview}}}</p>
+      </li>
+    {{/previews}}
 
   </body>
 </html>

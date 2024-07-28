@@ -1,12 +1,14 @@
 const LoginValidator = require('../validator/LoginValidator');
 const Usuario = require('../model/Usuario');
+const Preview = require('../model/Preview');
 
 exports.homePage = (req, res) => {
+  const previews = Preview.getPreviews;
   if (req.session.logado) {
-    res.render('index', { login: true });
+    res.render('index', { login: true, previews: previews });
   }
   else {
-    res.render('index', {login: false});
+    res.render('index', {login: false, previews: previews});
   }
 }
 
