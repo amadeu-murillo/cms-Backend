@@ -25,6 +25,7 @@
     {{/login}}
 
     <a class="options" href="/arquivos/novo">Criar Postagem</a>
+    <a class="options" href="/arquivos/upload">Enviar Postagem</a>
     <a class="options" href="/arquivos">Postagens Disponíveis</a>
   </div>
 
@@ -44,6 +45,9 @@
         <a class="ver-completa-button" href="/arquivos/{{titulo}}.html">Ver completa</a>
         <p class="preview">{{{preview}}}</p>
       </li>
+      <a href="/arquivos/download/{{titulo}}">
+        <img src="/images/download.webp">
+      </a>
     {{/previews}}
   </ul>
 

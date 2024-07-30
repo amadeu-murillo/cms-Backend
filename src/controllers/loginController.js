@@ -41,8 +41,8 @@ exports.login = (req, res) => {
     // Checando dados do usuário
     if (Usuario.isUser(value)) {
       req.session.user = value;
-      //res.render('index', {login: true, success: true});
-      res.redirect('/');
+      const previews = Preview.getPreviews;
+      res.render('index', {login: true, success: true, previews: previews});
     } 
     else {
         res.render('login', {error: 'Invalid username or password', value: req.body});

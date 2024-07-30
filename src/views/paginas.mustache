@@ -24,6 +24,26 @@
     <h3>{{.}}</h3>
   {{/error}}
 
-  <a class="options" href="/">Voltar</a>
-</body>
+    <h1>PÁGINAS DISPONÍVEIS</h1>
+
+    <ul>
+        {{#files}}
+            <li class="files-options">
+                <a href="/arquivos/{{.}}">{{.}}</a>
+                <div>
+                  <a href="/arquivos/download/{{.}}">
+                    <img src="/images/download.webp">
+                  </a>
+                  <a href="/arquivos/editar/{{.}}">Editar</a>
+                </div>
+            </li>
+        {{/files}}
+    </ul>
+
+    {{#error}}
+      <h3>{{.}}<h3>
+    {{/error}}
+
+    <a href="/">Voltar</a>
+  </body>
 </html>
