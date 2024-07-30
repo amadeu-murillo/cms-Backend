@@ -1,0 +1,21 @@
+<!-- views/editor.mustache -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>Editor</title>
+</head>
+<body>
+  <h1>Upload de Arquivo HTML</h1>
+  <form action="/arquivos/upload" method="post" enctype="multipart/form-data">
+    <input class="input-file" type="file" name="file" accept=".html" required>
+    {{#error}}
+      <p class="error">{{.}}</p>
+    {{/error}}
+    <button type="submit">Upload</button>
+  </form>
+  <a href="/">Voltar</a>
+</body>
+</html>
