@@ -28,15 +28,31 @@
     <a class="options" href="/arquivos">Postagens Disponíveis</a>
   </div>
 
-  <h2>POSTAGENS MAIS RECENTES</h2>
+  <h2>POSTAGENS</h2>
+  <div>
+    <label for="ordenar">Ordenar por:</label>
+    <select id="ordenar" onchange="sortPosts()">
+      <option value="padrao" {{#ordPadrao}}selected{{/ordPadrao}}>Padrão</option>
+      <option value="data" {{#ordData}}selected{{/ordData}}>Data</option>
+      <option value="titulo" {{#ordTitulo}}selected{{/ordTitulo}}>Título</option>
+    </select>
+  </div>
   <ul>
     {{#previews}}
       <li>
         <h2>{{titulo}}</h2>
-        <a class="ver-completa-button" href="/arquivos/{{filename}}">Ver completa</a>
+        <a class="ver-completa-button" href="/arquivos/{{titulo}}.html">Ver completa</a>
         <p class="preview">{{{preview}}}</p>
       </li>
     {{/previews}}
   </ul>
+
+  <script>
+      function sortPosts() {
+        const sort = document.getElementById('ordenar').value;
+        document.cookie = 'ordenar' + "=" + sort;  
+        window.location.href = `/`;
+      }
+    </script>
 </body>
 </html>
