@@ -13,7 +13,7 @@ exports.index = (req, res) => {
     console.log(files);
     res.render("paginas", {files: files});
   });
-}
+};
 
 // Mostra um arquivo pedido
 exports.getFile = (req, res) => {
@@ -36,7 +36,7 @@ exports.getFile = (req, res) => {
       }
       return res.render("conteudo", {titulo: file.replace(".html", ""), conteudo: data});
     });
-}
+};
 
 // Página de criação de arquivo
 exports.createPage = (req, res) => {
@@ -64,7 +64,7 @@ exports.editPage = (req, res) => {
       }
       return res.render("editor", {titulo: file.replace(".html", ""), conteudo: data});
     });
-}
+};
 
 // Criar postagem
 exports.createFile = (req, res) => {
@@ -104,4 +104,19 @@ exports.delete = (req, res) => {
   } else {
     res.render("conteudo", {error: "Erro ao encontrar arquivo: arquivo não existe."});
   }
-}
+};
+
+exports.downloadFile = (req, res) => {
+  const { file } = req.params;
+  const dirPath = path.resolve(__dirname, "..", "Arquivos");
+  const filePath = file.endsWith('.html') ? path.join(dirPath, file) : path.join(dirPath, `${file}.html`);
+  
+  if (!fs.existsSync(filePath)) return res.status(404).send('Arquivo não encontrado');  
+
+  res.download(filePath, (err) => {
+    if (err) {
+      console.error('Erro ao baixar o arquivo:', err);
+      res.status(500).send('Erro ao baixar o arquivo');
+    }
+  });
+};

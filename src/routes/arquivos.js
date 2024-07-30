@@ -21,4 +21,7 @@ router.post('/create', arquivosController.createFile);
 // Deleta arquivos
 router.get('/excluir/:titulo', arquivosController.delete);
 
+// Rota de download
+router.get('/download/:file', arquivosController.downloadFile);
+
 module.exports = router;
