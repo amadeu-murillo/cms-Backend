@@ -18,9 +18,14 @@
 
     <ul>
         {{#files}}
-            <li>
+            <li class="files-options">
                 <a href="/arquivos/{{.}}">{{.}}</a>
-                <a href="/arquivos/editar/{{.}}">Editar</a>
+                <div>
+                  <a href="/arquivos/download/{{.}}">
+                    <img src="/images/download.webp">
+                  </a>
+                  <a href="/arquivos/editar/{{.}}">Editar</a>
+                </div>
             </li>
         {{/files}}
     </ul>
