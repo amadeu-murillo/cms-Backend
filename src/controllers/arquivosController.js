@@ -1,5 +1,7 @@
 const path = require('path');
 const fs = require('fs');
+const upload = require('../middlewares/uploadMiddleware');
+const multer = require('multer');
 
 // Mostra todos arquivos
 exports.index = (req, res) => {
@@ -110,7 +112,7 @@ exports.downloadFile = (req, res) => {
   const { file } = req.params;
   const dirPath = path.resolve(__dirname, "..", "Arquivos");
   const filePath = file.endsWith('.html') ? path.join(dirPath, file) : path.join(dirPath, `${file}.html`);
-  
+
   if (!fs.existsSync(filePath)) return res.status(404).send('Arquivo não encontrado');  
 
   res.download(filePath, (err) => {
@@ -120,3 +122,21 @@ exports.downloadFile = (req, res) => {
     }
   });
 };
+
+exports.uploadFile = (req, res) => {
+  upload.single('file')(req, res, (err) => {
+    if (err) {
+      if (err instanceof multer.MulterError) {
+        return res.render('upload', {error: `Erro do Multer: ${err.message}`});
+      } else if (err.message === 'Apenas arquivos .html são permitidos') {
+        return res.render('upload', {error: 'Erro: Apenas arquivos .html são permitidos'});
+      } else {
+        return res.render('upload', {error: `Erro: ${err.message}`});
+      }
+    }
+    res.redirect('/arquivos');
+  });
+};
+exports.uploadPage = (req, res) => {
+  res.render('upload');
+}
