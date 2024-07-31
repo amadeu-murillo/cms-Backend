@@ -1,6 +1,19 @@
 const path = require('path');
 const fs = require('fs');
 
+function formatDate(date) {
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'America/Sao_Paulo' // Optional: specify time zone
+    };
+    return new Date(date).toLocaleString('pt-BR', options);
+}
+
 module.exports = {
     getPreviews: function getPreviews() {
         const dirPosts = path.resolve(__dirname, "..", "Arquivos");
@@ -8,13 +21,15 @@ module.exports = {
         return arqPosts.map(arquivo => {
             const pathArq = path.join(dirPosts, arquivo);
             const conteudo = fs.readFileSync(pathArq, 'utf-8');
+            const stats = fs.statSync(pathArq); // Get file stats
+            const creationDate = stats.birthtime; // Get creation date
             preview = conteudo.split('\n').slice(0, 3). join(' ');
-            const stats = fs.statSync(pathArq);
             return {
                 titulo: arquivo.replace('.html', ''),
                 preview,
                 nomeArq: arquivo,
-                data: stats.mtime
+                data: stats.mtime,
+                dataForm: formatDate(creationDate)
             };
         });
     },

@@ -42,11 +42,12 @@
     {{#previews}}
       <li>
         <h2>{{titulo}}</h2>
+        <p><strong>Data da postagem: </strong>{{dataForm}}</p>
         <a class="ver-completa-button" href="/arquivos/{{titulo}}.html">Ver completa</a>
-        <p class="preview">{{{preview}}}</p>
         <a href="/arquivos/download/{{titulo}}">
           <img src="/images/download.webp">
         </a>
+        <p class="preview">{{{preview}}}</p>
       </li>
     {{/previews}}
   </ul>
